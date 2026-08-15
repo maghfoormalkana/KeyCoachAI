@@ -78,3 +78,23 @@ export async function sendToOmniRoute(
 
   return await response.json();
 }
+
+export async function testOmniRouteConnection() {
+  try {
+    // Send a tiny, low-token request just to verify the connection works
+    const response = await sendToOmniRoute(
+      [{ role: "user", content: "Ping. Reply with exactly 'Pong'." }],
+      0.1, // low temperature
+      10   // max 10 tokens
+    );
+    
+    return { 
+      success: true, 
+      message: "Connection successful!", 
+      data: response 
+    };
+  } catch (error: any) {
+    console.error("OmniRoute connection test failed:", error);
+    throw new Error(`Connection test failed: ${error.message}`);
+  }
+}
