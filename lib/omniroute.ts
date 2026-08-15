@@ -79,19 +79,46 @@ export async function sendToOmniRoute(
   return await response.json();
 }
 
-export async function testOmniRouteConnection() {
+export async function testOmniRouteConnection(
+  baseUrl: string,
+  apiKey: string,
+  model: string
+) {
+  if (!apiKey || apiKey.length < 10) {
+    throw new Error("API key is missing or invalid.");
+  }
+
+  const url = baseUrl.endsWith("/v1")
+    ? `${baseUrl}/chat/completions`
+    : `${baseUrl}/v1/chat/completions`;
+
   try {
-    // Send a tiny, low-token request just to verify the connection works
-    const response = await sendToOmniRoute(
-      [{ role: "user", content: "Ping. Reply with exactly 'Pong'." }],
-      0.1, // low temperature
-      10   // max 10 tokens
-    );
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: [{ role: "user", content: "Ping. Reply with exactly 'Pong'." }],
+        stream: false,
+        temperature: 0.1,
+        max_tokens: 10,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`OmniRoute HTTP ${response.status}: ${errorText}`);
+    }
+
+    const data = await response.json();
     
     return { 
       success: true, 
       message: "Connection successful!", 
-      data: response 
+      data 
     };
   } catch (error: any) {
     console.error("OmniRoute connection test failed:", error);
