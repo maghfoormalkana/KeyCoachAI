@@ -7,7 +7,16 @@ interface VirtualKeyboardProps {
   weakKeys: string[];
 }
 
-const KEYBOARD_ROWS = [
+// ✅ Add this explicit Type definition
+type KeyDef = {
+  key: string;
+  display: string;
+  wide?: boolean;
+  space?: boolean;
+};
+
+// ✅ Apply the type to the array
+const KEYBOARD_ROWS: KeyDef[][] = [
   [
     { key: "`", display: "`" }, { key: "1", display: "1" }, { key: "2", display: "2" },
     { key: "3", display: "3" }, { key: "4", display: "4" }, { key: "5", display: "5" },
