@@ -360,16 +360,18 @@ Detected endpoints across application routes:
 
 ---
 
-## 👥 Contributors
-
-Thanks to everyone who has contributed to this project:
+## 👤 Author & Maintainer
 
 <p align="left">
-<a href="https://github.com/maghfoormalkana" title="maghfoormalkana"><img src="https://avatars.githubusercontent.com/u/145108970?v=4&s=64" width="64" height="64" alt="maghfoormalkana" style="border-radius:50%" /></a>
+<a href="https://github.com/maghfoormalkana"><img src="https://avatars.githubusercontent.com/u/145108970?v=4&s=64" width="64" height="64" alt="Maghfoor Ahmad" style="border-radius:50%" /></a>
 </p>
 
-[See the full list of contributors →](https://github.com/maghfoormalkana/KeyCoachAI/graphs/contributors)
+**Maghfoor Ahmad** — [uxdmarketing.com](https://uxdmarketing.com)
 
+---
+
+### 🤝 Want to contribute?
+I am currently the sole maintainer of this project, but I would love your help! If you're interested in improving KeyCoachAI, please open an [Issue](https://github.com/maghfoormalkana/KeyCoachAI/issues) or submit a Pull Request.
 ---
 
 ## 👥 Contributing
