@@ -29,7 +29,8 @@ export async function GET(request: NextRequest) {
     const allWeakKeys: string[] = [];
     const allWeakPatterns: string[] = [];
 
-    recentResults.forEach((result) => {
+    // FIX: Added explicit types for 'result' so TypeScript doesn't fail the build
+    recentResults.forEach((result: { weakKeys?: string[]; weakPatterns?: string[] }) => {
       allWeakKeys.push(...(result.weakKeys || []));
       allWeakPatterns.push(...(result.weakPatterns || []));
     });
