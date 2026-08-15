@@ -22,7 +22,9 @@ export async function getOmniRouteConfig(): Promise<OmniRouteConfig> {
 
   try {
     await connectDB();
-    const settings = await Settings.findOne().sort({ createdAt: -1 }).lean();
+    // ✅ FIX: Added "as any" to bypass strict Mongoose type checking
+    const settings = await Settings.findOne().sort({ createdAt: -1 }).lean() as any;
+    
     if (settings && settings.omnirouteApiKey) {
       return {
         baseUrl: settings.omnirouteBaseUrl || envBaseUrl || "http://localhost:20128/v1",
