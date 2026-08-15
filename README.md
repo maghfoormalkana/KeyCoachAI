@@ -69,17 +69,7 @@ A high-level view of how the main pieces fit together:
 
 ```mermaid
 flowchart TD
-    %% ==========================================
-    %% COLOR PALETTE & STYLES
-    %% ==========================================
-    classDef ui fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e,rx:8,ry:8
-    classDef engine fill:#bae6fd,stroke:#0369a1,stroke-width:2px,color:#082f49,rx:8,ry:8
-    classDef api fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d,rx:8,ry:8
-    classDef auth fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#14532d,rx:8,ry:8
-    classDef db fill:#fef08a,stroke:#ca8a04,stroke-width:2px,color:#713f12
-    classDef ai fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87,rx:8,ry:8
-    classDef admin fill:#ffe4e6,stroke:#e11d48,stroke-width:2px,color:#881337,rx:8,ry:8
-    classDef subGraphStyle fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px,stroke-dasharray: 5 5,rx:10,ry:10
+
 
     %% ==========================================
     %% CLIENT ARCHITECTURE
@@ -357,16 +347,7 @@ Detected endpoints across application routes:
     ├── index.ts
     └── performance.ts
 ```
-```mermaid
-flowchart TD
-    User["👤 User / Browser"]
-    FE["🖼️ Next.js Frontend"]
-    User --> FE
-    API["⚙️ API Server"]
-    FE --> API
-    DB[("🗄️ MongoDB")]
-    API --> DB
-```
+
 ---
 
 ## 👤 Author & Maintainer
