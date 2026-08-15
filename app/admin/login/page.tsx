@@ -48,9 +48,11 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center">
-              <Keyboard className="w-5 h-5 text-white" />
-            </div>
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="w-10 h-10 object-contain"
+            />
             <span className="font-bold text-xl">
               KeyCoach<span className="text-brand-400">AI</span>
             </span>
@@ -85,7 +87,7 @@ export default function AdminLoginPage() {
               />
             </div>
             <p className="text-xs text-slate-500 mt-2">
-              This is the ADMIN_SECRET from your .env.local file
+              This is for ADMIN only.
             </p>
           </div>
 
