@@ -69,52 +69,82 @@ A high-level view of how the main pieces fit together:
 
 ```mermaid
 flowchart TD
-    %% CLIENT TIER
+    %% ==========================================
+    %% COLOR PALETTE & STYLES
+    %% ==========================================
+    classDef ui fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e,rx:8,ry:8
+    classDef engine fill:#bae6fd,stroke:#0369a1,stroke-width:2px,color:#082f49,rx:8,ry:8
+    classDef api fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d,rx:8,ry:8
+    classDef auth fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#14532d,rx:8,ry:8
+    classDef db fill:#fef08a,stroke:#ca8a04,stroke-width:2px,color:#713f12
+    classDef ai fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87,rx:8,ry:8
+    classDef admin fill:#ffe4e6,stroke:#e11d48,stroke-width:2px,color:#881337,rx:8,ry:8
+    classDef subGraphStyle fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px,stroke-dasharray: 5 5,rx:10,ry:10
+
+    %% ==========================================
+    %% CLIENT ARCHITECTURE
+    %% ==========================================
     subgraph Client["🌐 CLIENT (Browser)"]
-        Home["🏠 Homepage"]
-        Test["⌨️ Typing Test"]
-        Dash["📊 Dashboard"]
+        direction TB
         
-        Engine["⚙️ Keystroke Capture Engine<br/>(React useState + useRef)"]
-        Stats["📈 Real-Time Stats<br/>(WPM + Accuracy)"]
-        Analyzer["🔬 Performance Analyzer<br/>(8-Dimension Analysis)"]
+        %% UI Layer
+        Home["🏠 Homepage"]:::ui
+        Test["⌨️ Typing Test"]:::ui
+        Dash["📊 Dashboard"]:::ui
         
-        Home --> Engine
-        Test --> Engine
-        Dash --> Engine
+        %% Engine Layer
+        Engine["⚙️ Keystroke Capture Engine<br/>(React useState + useRef)"]:::engine
+        Stats["📈 Real-Time Stats<br/>(WPM + Accuracy)"]:::engine
+        Analyzer["🔬 Performance Analyzer<br/>(8-Dimension Analysis)"]:::engine
         
+        %% Client Internal Flow
+        Home & Test & Dash --> Engine
         Engine --> Stats
         Stats --> Analyzer
     end
 
-    %% SERVER TIER
+    %% ==========================================
+    %% SERVER ARCHITECTURE
+    %% ==========================================
     subgraph Server["🖥️ NEXT.JS 14 SERVER"]
-        API["🔌 API Routes<br/>(App Router)"]
-        Coach["🤖 AI Coach API"]
-        Passage["📝 Passage Generator"]
+        direction TB
         
-        Auth["🔒 Auth.js Middleware<br/>(JWT + OAuth)"]
+        API["🔌 API Routes<br/>(App Router)"]:::api
+        Coach["🤖 AI Coach API"]:::api
+        Passage["📝 Passage Generator"]:::api
         
-        API --> Auth
-        Coach --> Auth
-        Passage --> Auth
+        Auth["🔒 Auth.js Middleware<br/>(JWT + OAuth)"]:::auth
+        
+        %% Server Internal Flow
+        API & Coach & Passage --> Auth
     end
 
-    %% DATA & EXTERNAL SERVICES
-    Mongo[("🗄️ MongoDB Atlas<br/>(Mongoose)")]
-    LLM["🧠 LLM API<br/>(OmniRoute)"]
-    Admin["👑 Admin Panel"]
+    %% ==========================================
+    %% EXTERNAL SERVICES & DATABASES
+    %% ==========================================
+    Mongo[("🗄️ MongoDB Atlas<br/>(Mongoose)")]:::db
+    LLM["🧠 LLM API<br/>(OmniRoute)"]:::ai
+    Admin["👑 Admin Panel"]:::admin
 
-    %% CLIENT -> SERVER ROUTES
+    %% ==========================================
+    %% CROSS-BOUNDARY DATA FLOW
+    %% ==========================================
+    
+    %% Client to Server
     Analyzer -- "HTTPS / JSON" --> API
     Analyzer -- "HTTPS / JSON" --> Coach
     Analyzer -- "HTTPS / JSON" --> Passage
 
-    %% BACKEND -> SERVICES ROUTES
+    %% Server to Services
     API --> Mongo
     Passage --> Mongo
     Coach --> LLM
+    
+    %% Server to Admin
     Server -.-> Admin
+
+    %% Apply dashed styles to the main containers
+    class Client,Server subGraphStyle
 ```
 
 ---
