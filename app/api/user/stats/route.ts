@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const recentResults = await TypingResult.find({ userId: token.sub })
       .sort({ createdAt: -1 })
       .limit(10)
-      .lean();
+      .lean() as any;
 
     // Aggregate weak keys and patterns
     const allWeakKeys: string[] = [];

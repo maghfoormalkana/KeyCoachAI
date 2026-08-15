@@ -10,7 +10,8 @@ import Settings from "@/models/Settings";
 export async function GET(request: NextRequest) {
   try {
     await connectDB();
-    const settings = await Settings.findOne().sort({ createdAt: -1 }).lean();
+    const settingsDoc = await Settings.findOne().sort({ createdAt: -1 }).lean();
+    const settings = settingsDoc as any;
 
     if (!settings) {
       // Return defaults from env
@@ -62,7 +63,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     // Upsert settings
-    const settings = await Settings.findOneAndUpdate(
+    const settingsDoc = await Settings.findOneAndUpdate(
       {},
       {
         omnirouteBaseUrl: validated.omnirouteBaseUrl,
@@ -73,13 +74,15 @@ export async function POST(request: NextRequest) {
       { upsert: true, new: true }
     );
 
+        const savedSettings = settingsDoc as any;
+
     return NextResponse.json({
       success: true,
       message: "Settings saved successfully",
       settings: {
-        omnirouteBaseUrl: settings.omnirouteBaseUrl,
-        omnirouteModel: settings.omnirouteModel,
-        isConfigured: settings.isConfigured,
+        omnirouteBaseUrl: savedSettings.omnirouteBaseUrl,
+        omnirouteModel: savedSettings.omnirouteModel,
+        isConfigured: savedSettings.isConfigured,
       },
     });
 

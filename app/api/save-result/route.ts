@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
     const results = await TypingResult.find(query)
       .sort({ createdAt: -1 })
       .limit(limit)
-      .lean();
+      .lean() as any;
 
     return NextResponse.json({ results }, { status: 200 });
 
