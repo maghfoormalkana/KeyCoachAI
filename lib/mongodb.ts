@@ -6,6 +6,14 @@ if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI environment variable");
 }
 
+// Tell TypeScript that the global object has a mongoose property
+declare global {
+  var mongoose: {
+    conn: any;
+    promise: any;
+  };
+}
+
 let cached = global.mongoose;
 
 if (!cached) {
