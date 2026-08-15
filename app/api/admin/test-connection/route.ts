@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     // Update last tested status in DB if settings exist
     try {
       await connectDB();
-      await settingsDoc.findOneAndUpdate(
+      await Settings.findOneAndUpdate(
         {},
         {
           lastTested: new Date(),
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
         },
         { upsert: false }
       );
-      const settings = settingsDoc as any;
+      const settings = Settings as any;
     } catch {
       // Ignore DB errors for test connection
     }
