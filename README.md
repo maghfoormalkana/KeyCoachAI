@@ -69,78 +69,54 @@ A high-level view of how the main pieces fit together:
 
 ```mermaid
 flowchart TD
-    User["👤 User / Browser"]
-    FE["🖼️ Next.js Frontend"]
-    User --> FE
-    API["⚙️ API Server"]
-    FE --> API
-    DB[("🗄️ MongoDB")]
-    API --> DB
+    %% CLIENT TIER
+    subgraph Client["🌐 CLIENT (Browser)"]
+        Home["🏠 Homepage"]
+        Test["⌨️ Typing Test"]
+        Dash["📊 Dashboard"]
+        
+        Engine["⚙️ Keystroke Capture Engine<br/>(React useState + useRef)"]
+        Stats["📈 Real-Time Stats<br/>(WPM + Accuracy)"]
+        Analyzer["🔬 Performance Analyzer<br/>(8-Dimension Analysis)"]
+        
+        Home --> Engine
+        Test --> Engine
+        Dash --> Engine
+        
+        Engine --> Stats
+        Stats --> Analyzer
+    end
+
+    %% SERVER TIER
+    subgraph Server["🖥️ NEXT.JS 14 SERVER"]
+        API["🔌 API Routes<br/>(App Router)"]
+        Coach["🤖 AI Coach API"]
+        Passage["📝 Passage Generator"]
+        
+        Auth["🔒 Auth.js Middleware<br/>(JWT + OAuth)"]
+        
+        API --> Auth
+        Coach --> Auth
+        Passage --> Auth
+    end
+
+    %% DATA & EXTERNAL SERVICES
+    Mongo[("🗄️ MongoDB Atlas<br/>(Mongoose)")]
+    LLM["🧠 LLM API<br/>(OmniRoute)"]
+    Admin["👑 Admin Panel"]
+
+    %% CLIENT -> SERVER ROUTES
+    Analyzer -- "HTTPS / JSON" --> API
+    Analyzer -- "HTTPS / JSON" --> Coach
+    Analyzer -- "HTTPS / JSON" --> Passage
+
+    %% BACKEND -> SERVICES ROUTES
+    API --> Mongo
+    Passage --> Mongo
+    Coach --> LLM
+    Server -.-> Admin
 ```
-flowchart TB
-    %% STYLING / CLASS DEFINITIONS
-    classDef clientLayer fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e,rx:8,ry:8
-    classDef coreEngine fill:#bae6fd,stroke:#0369a1,stroke-width:2px,color:#082f49,rx:8,ry:8
-    classDef serverLayer fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d,rx:8,ry:8
-    classDef authLayer fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#14532d,rx:8,ry:8
-    classDef database fill:#fef08a,stroke:#ca8a04,stroke-width:2px,color:#713f12,rx:8,ry:8
-    classDef aiService fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87,rx:8,ry:8
-    classDef adminLayer fill:#ffe4e6,stroke:#e11d48,stroke-width:2px,color:#881337,rx:8,ry:8
-    classDef subGraphStyle fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px,stroke-dasharray: 5 5
 
-    %% CLIENT SUBGRAPH
-    subgraph CLIENT["🌐 CLIENT — Browser"]
-        direction TB
-        
-        %% UI Nodes
-        HOME["🏠 Homepage"]:::clientLayer
-        TEST["⌨️ Typing Test"]:::clientLayer
-        DASH["📊 Dashboard"]:::clientLayer
-
-        %% Engine Nodes
-        ENGINE["⚙️ Real-Time Keystroke<br/>Capture Engine<br/>(React useState + useRef)"]:::coreEngine
-        STATS["📈 Real-Time Stats<br/>(WPM + Accuracy)"]:::coreEngine
-        ANALYZER["🔬 Performance Analyzer<br/>(8-Dimension Analysis)"]:::coreEngine
-
-        %% Client Connections
-        HOME & TEST & DASH --> ENGINE
-        ENGINE --> STATS
-        STATS --> ANALYZER
-        ENGINE --> ANALYZER
-    end
-
-    %% SERVER SUBGRAPH
-    subgraph SERVER["⚙️ NEXT.JS 14 SERVER"]
-        direction TB
-        
-        %% Server Nodes
-        API["🔌 API Routes<br/>(App Router)"]:::serverLayer
-        COACH["🤖 AI Coach API"]:::serverLayer
-        PASSAGE["📝 Passage Generator"]:::serverLayer
-        
-        AUTH["🔒 Auth.js Middleware<br/>(JWT + OAuth)"]:::authLayer
-
-        %% Server Connections
-        API & COACH & PASSAGE --> AUTH
-    end
-
-    %% SERVICES / EXTERNAL
-    MONGO["🗄️ MongoDB Atlas<br/>(Mongoose)"]:::database
-    LLM["🧠 LLM API<br/>(OmniRoute)"]:::aiService
-    ADMIN["👑 Admin Panel"]:::adminLayer
-
-    %% CROSS-BOUNDARY CONNECTIONS
-    ANALYZER -- "HTTPS / JSON" --> API
-    ANALYZER -- "HTTPS / JSON" --> COACH
-    ANALYZER -- "HTTPS / JSON" --> PASSAGE
-
-    API --> MONGO
-    COACH --> LLM
-    PASSAGE --> MONGO
-    SERVER -.-> ADMIN
-
-    %% APPLY SUBGRAPH STYLES
-    class CLIENT,SERVER subGraphStyle
 ---
 
 ## ⚡ Quick Start
