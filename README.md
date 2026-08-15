@@ -357,7 +357,16 @@ Detected endpoints across application routes:
     ├── index.ts
     └── performance.ts
 ```
-
+```mermaid
+flowchart TD
+    User["👤 User / Browser"]
+    FE["🖼️ Next.js Frontend"]
+    User --> FE
+    API["⚙️ API Server"]
+    FE --> API
+    DB[("🗄️ MongoDB")]
+    API --> DB
+```
 ---
 
 ## 👤 Author & Maintainer
