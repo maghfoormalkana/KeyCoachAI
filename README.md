@@ -77,7 +77,70 @@ flowchart TD
     DB[("🗄️ MongoDB")]
     API --> DB
 ```
+flowchart TB
+    %% STYLING / CLASS DEFINITIONS
+    classDef clientLayer fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0c4a6e,rx:8,ry:8
+    classDef coreEngine fill:#bae6fd,stroke:#0369a1,stroke-width:2px,color:#082f49,rx:8,ry:8
+    classDef serverLayer fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d,rx:8,ry:8
+    classDef authLayer fill:#bbf7d0,stroke:#15803d,stroke-width:2px,color:#14532d,rx:8,ry:8
+    classDef database fill:#fef08a,stroke:#ca8a04,stroke-width:2px,color:#713f12,rx:8,ry:8
+    classDef aiService fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87,rx:8,ry:8
+    classDef adminLayer fill:#ffe4e6,stroke:#e11d48,stroke-width:2px,color:#881337,rx:8,ry:8
+    classDef subGraphStyle fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px,stroke-dasharray: 5 5
 
+    %% CLIENT SUBGRAPH
+    subgraph CLIENT["🌐 CLIENT — Browser"]
+        direction TB
+        
+        %% UI Nodes
+        HOME["🏠 Homepage"]:::clientLayer
+        TEST["⌨️ Typing Test"]:::clientLayer
+        DASH["📊 Dashboard"]:::clientLayer
+
+        %% Engine Nodes
+        ENGINE["⚙️ Real-Time Keystroke<br/>Capture Engine<br/>(React useState + useRef)"]:::coreEngine
+        STATS["📈 Real-Time Stats<br/>(WPM + Accuracy)"]:::coreEngine
+        ANALYZER["🔬 Performance Analyzer<br/>(8-Dimension Analysis)"]:::coreEngine
+
+        %% Client Connections
+        HOME & TEST & DASH --> ENGINE
+        ENGINE --> STATS
+        STATS --> ANALYZER
+        ENGINE --> ANALYZER
+    end
+
+    %% SERVER SUBGRAPH
+    subgraph SERVER["⚙️ NEXT.JS 14 SERVER"]
+        direction TB
+        
+        %% Server Nodes
+        API["🔌 API Routes<br/>(App Router)"]:::serverLayer
+        COACH["🤖 AI Coach API"]:::serverLayer
+        PASSAGE["📝 Passage Generator"]:::serverLayer
+        
+        AUTH["🔒 Auth.js Middleware<br/>(JWT + OAuth)"]:::authLayer
+
+        %% Server Connections
+        API & COACH & PASSAGE --> AUTH
+    end
+
+    %% SERVICES / EXTERNAL
+    MONGO["🗄️ MongoDB Atlas<br/>(Mongoose)"]:::database
+    LLM["🧠 LLM API<br/>(OmniRoute)"]:::aiService
+    ADMIN["👑 Admin Panel"]:::adminLayer
+
+    %% CROSS-BOUNDARY CONNECTIONS
+    ANALYZER -- "HTTPS / JSON" --> API
+    ANALYZER -- "HTTPS / JSON" --> COACH
+    ANALYZER -- "HTTPS / JSON" --> PASSAGE
+
+    API --> MONGO
+    COACH --> LLM
+    PASSAGE --> MONGO
+    SERVER -.-> ADMIN
+
+    %% APPLY SUBGRAPH STYLES
+    class CLIENT,SERVER subGraphStyle
 ---
 
 ## ⚡ Quick Start
