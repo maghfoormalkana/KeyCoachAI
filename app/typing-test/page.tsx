@@ -266,7 +266,15 @@ export default function TypingTestPage() {
     if (keystrokes.length === 0) return;
 
     const actualDuration = startTime > 0 ? Math.round((Date.now() - startTime) / 1000) : duration;
-    const perf = analyzeDetailedPerformance(keystrokes, text, input, actualDuration, startTime);
+    
+    // FIX: Passing the expected stats object instead of just the number
+    const perf = analyzeDetailedPerformance(keystrokes, text, input, actualDuration, {
+      prevWpm: 0,
+      prevAccuracy: 0,
+      prevConsistency: 0,
+      prevErrorRate: 0
+    });
+    
     setDetailedPerf(perf);
   };
 
