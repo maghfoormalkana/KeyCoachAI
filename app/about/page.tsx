@@ -207,7 +207,7 @@ export default function AboutPage() {
               
               <div className="space-y-5 text-slate-300 leading-relaxed text-lg">
                 <p>
-                  I currently work at <span className="text-white font-semibold">RozgarMap</span>, where I combine technical knowledge with teaching, marketing, and practical project development. With a Master of Computer Applications (MCA) from <span className="text-white font-semibold">Guru Nanak Dev University</span>, my journey has moved across several connected roles: from student to lecturer, and now trainer and developer.
+                  I currently work at <span className="text-white font-semibold">RozgarMap</span>, where I combine technical knowledge with teaching, digital marketing, and practical project development. With a Master of Computer Applications (MCA) from <span className="text-white font-semibold">Guru Nanak Dev University</span>, my journey has moved across several connected roles: from student to lecturer, and now trainer and developer.
                 </p>
                 
                 <div className="bg-gradient-to-r from-brand-900/40 to-transparent border-l-4 border-brand-500 p-6 rounded-r-2xl my-8 shadow-inner">
